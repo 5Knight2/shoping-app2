@@ -4,6 +4,7 @@ const Product=require('../models/product');
 exports.get=(req,res,next)=>{
     
     const products = Product.fetchall();
+    console.log(products)
     res.render('shop', {
       prods: products,
       pageTitle: 'Shop',
