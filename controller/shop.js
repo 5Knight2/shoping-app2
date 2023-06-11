@@ -3,7 +3,7 @@ const path=require('path')
 const Product=require('../models/product.js');
 exports.get=(req,res,next)=>{
     
-     Product.fetchall((products)=>{
+     Product.fetchAll((products)=>{
     console.log(products)
     res.render('shop', {
       prods: products,
