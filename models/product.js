@@ -1,4 +1,5 @@
 const fs=require('fs');
+const path=require('path')
 
 
 module.exports=class Product{
@@ -6,21 +7,43 @@ module.exports=class Product{
         this.title=title
     }
 
-     save(){
-        let a=fs.readFileSync('products.txt');
-        a=a+"  .:-"+this.title;
-        fs.writeFileSync('products.txt',a)
+      save(){
+        const p='./data/products.json';
+       
+         fs.readFile(p,(err,filedata)=>{
+         
+            let products=[];
+            if(!err){
+                products=JSON.parse(filedata);
+                
+            }
+            products.push(this)
+           
+            
+            fs.writeFile(p, JSON.stringify(products),err=>{
+                console.log(err)});
+
+        });
+        
+
+        
     }
 
-    static fetchall(){
+    static fetchall(cb){
         
-         let p=fs.readFileSync('products.txt')
-         p=p.toString();
-         p=p.split("  .:-");
-         p.shift();
-         console.log(p)
-         return p
+        let p='./data/products.json';
+        fs.readFile(p,(err,filedata)=>{
+            let products=[];
+             if(!err){
+                 products=JSON.parse(filedata)
+                 cb(products);
+             }
+             else {console.log(err);
+               cb([]);
+             }
+         })
 
+       
     }
 
 

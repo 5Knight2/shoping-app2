@@ -1,9 +1,9 @@
 const path=require('path')
 
-const Product=require('../models/product');
+const Product=require('../models/product.js');
 exports.get=(req,res,next)=>{
     
-    const products = Product.fetchall();
+     Product.fetchall((products)=>{
     console.log(products)
     res.render('shop', {
       prods: products,
@@ -13,6 +13,7 @@ exports.get=(req,res,next)=>{
       activeShop: true,
       productCSS: true
     });
+});
 }
 
 exports.post=(req,res,next)=>{

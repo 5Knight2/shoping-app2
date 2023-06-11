@@ -6,15 +6,17 @@ exports.get=(req,res,next)=>{
 }
 
 exports.getproduct = (req, res, next) => {
-    const products = Product.fetchall();
-    res.render('shop', {
-      prods: products,
-      pageTitle: 'Shop',
-      path: '../view/shop.ejs',
-      hasProducts: products.length > 0,
-      activeShop: true,
-      productCSS: true
+    const products = Product.fetchall((products)=>{
+        res.render('shop', {
+            prods: products,
+            pageTitle: 'Shop',
+            path: '../view/shop.ejs',
+            hasProducts: products.length > 0,
+            activeShop: true,
+            productCSS: true
+          });
     });
+   
   };
 
 
