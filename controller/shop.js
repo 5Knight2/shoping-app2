@@ -1,5 +1,5 @@
 const path=require('path')
-
+const Cart=require('../models/cart.js');
 const Product=require('../models/product.js');
 exports.get=(req,res,next)=>{
     
@@ -17,9 +17,12 @@ exports.get=(req,res,next)=>{
 }
 
 exports.post=(req,res,next)=>{
-    let msg=    req.body;
-    msg=msg.username+':- '+msg.message+"    ";
-    
+    let id=req.body.productid;
+    let price=req.body.price;
+    console.log("id=",id)
+    console.log(price)
+    Cart.addproduct(id,price);
+
    
     res.redirect('/shop')
     }

@@ -37,7 +37,11 @@
                             </p>
                         </div>
                         <div class="card__actions">
+                            <form action="/shop" method="post">
+                                <input type="hidden" value="<%=product.id%>" name="productid">
+                                <input type="hidden" value="<%=product.price%>" name="proice">
                             <button class="btn">Add to Cart</button>
+                            </form>
                         </div>
                         <div class="card__actions">
                             <a href="/add-product/<%=product.id%>">
