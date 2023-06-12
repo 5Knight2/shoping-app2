@@ -21,26 +21,29 @@
     </header>
 
 <body>
-  
+    
     <main>
-        <form class="product-form" action="/add-product" method="POST">
+        <form class="product-form" action="/add-product/<%if(edit==true){%><%=prod.id%>/?edit=true<%}%>" method="POST">
             <div class="form-control">
                 <label for="title">Title</label><br>
-                <input type="text" name="title" id="title"><br>
+                <input type="text" name="title" id="title" value="<%if(edit==true){%><%=prod.title%><%}%>"><br>
             </div>
             <div class="form-control">
                 <label for="imageUrl">Image URL</label><br>
-                <input type="text" name="imageUrl" id="imageUrl"><br>
+                <input type="text" name="imageUrl" id="imageUrl" value="<%if(edit==true){%><%=prod.imageUrl%><%}%>"><br>
             </div>
             <div class="form-control">
                 <label for="price">Price</label><br>
-                <input type="number" name="price" id="price" step="0.01"><br>
+                <input type="number" name="price" id="price" step="0.01" value="<%if(edit==true){%><%=prod.price%><%}%>"><br>
             </div>
             <div class="form-control">
                 <label for="description">Description</label><br>
-                <textarea name="description" id="description" rows="5"></textarea><br>
+                <textarea name="description" id="description" rows="5" ><%if(edit==true){%><%=prod.description%><%}%></textarea><br>
             </div>
-
-            <button class="btn" type="submit">Add Product</button>
+            <div class="form-control">
+               
+                <input type="hidden" name="id" id="id"  value="<%if(edit==true){%><%=prod.id%><%}%>"><br>
+            </div>
+            <button class="btn" type="submit"><%if(edit==true){%>Submit changes<%}else {%>Add Product<%}%></button>
         </form>
     </main>

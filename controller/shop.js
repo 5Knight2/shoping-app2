@@ -2,7 +2,7 @@ const path=require('path')
 const Cart=require('../models/cart.js');
 const Product=require('../models/product.js');
 exports.get=(req,res,next)=>{
-    
+
      Product.fetchAll((products)=>{
     console.log(products)
     res.render('shop', {
@@ -15,6 +15,8 @@ exports.get=(req,res,next)=>{
     });
 });
 }
+
+
 
 exports.post=(req,res,next)=>{
     let id=req.body.productid;

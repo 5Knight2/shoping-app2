@@ -6,18 +6,28 @@ exports.get = (req, res, next) => {
     res.render('add-product', {
       pageTitle: 'Add Product',
       path: '../view/add-product',
-      formsCSS: true,
-      productCSS: true,
-      activeAddProduct: true
+      edit:false
     });
   };
 
 exports.getproduct = (req, res, next) => {
     const id=req.params.id;
-    console.log(id);
     
-    {
-    
+    const editing=req.query.edit;
+    console.log(editing)
+
+    if(editing=='true'){
+   
+      Product.getById(id,(product)=>{
+        console.log(product)
+      res.render('add-product', {
+        pageTitle: 'Add Product',
+        prod:product,
+        path: '../view/add-product.ejs',
+        edit:true
+      });
+    });
+    }else{
       Product.getById(id,(product)=>{
      console.log(product)
      let products=[];
@@ -37,8 +47,18 @@ exports.getproduct = (req, res, next) => {
 
 
 exports.post=(req,res,next)=>{
+  const editing=req.query.edit;
+  if(editing!='true'){
     const product1=new Product(req.body.title,req.body.imageUrl,req.body.description,req.body.price);
     product1.save();
-
     res.redirect('/add-product')
+  }else{
+    const id=req.body.id;
+    const product1=new Product(req.body.title,req.body.imageUrl,req.body.description,req.body.price);
+    product1.id=id;
+    Product.replaceById(product1,(product)=>{     
+      res.redirect('/shop')
+  })
+    
     }
+  }

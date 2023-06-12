@@ -3,7 +3,7 @@ const path = require('path');
 
 const p='./data/products.json';
 
-const getProductsFromFile = cb => {
+const getProductsFromFile = (cb) => {
   fs.readFile(p, (err, fileContent) => {
     if (err) {
       cb([]);
@@ -42,4 +42,19 @@ module.exports = class Product {
       cb(product)
     });
   }
+  static replaceById(product1,cb) {
+    getProductsFromFile(products=>{
+
+      const product=products.findIndex(p=>p.id==product1.id)
+
+      products[product].title=product1.title;
+      products[product].price=product1.price;
+      products[product].description=product1.description;
+      products[product].imageUrl=product1.imageUrl;
+      
+      fs.writeFile(p,JSON.stringify(products),err=>{console.log(err)});
+     cb(products)
+    });
+  }
+
 };
