@@ -23,7 +23,7 @@
 <body>
     
     <main>
-        <form class="product-form" action="/add-product/<%if(edit==true){%><%=prod.id%>/?edit=true<%}%>" method="POST">
+        <form class="product-form" action="/add-product<%if(edit==true){%>/<%=prod.id%>/?edit=true<%}%>" method="POST">
             <div class="form-control">
                 <label for="title">Title</label><br>
                 <input type="text" name="title" id="title" value="<%if(edit==true){%><%=prod.title%><%}%>"><br>

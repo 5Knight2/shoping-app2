@@ -56,5 +56,17 @@ module.exports = class Product {
      cb(products)
     });
   }
+  static deleteById(id,cb){
+    getProductsFromFile(products=>{
+
+      
+      let productsnew=[];
+      for(let i=0;i<products.length;i++){
+        if(products[i].id!=id)productsnew.push(products[i])
+      }
+      fs.writeFile(p,JSON.stringify(productsnew),err=>{console.log(err)});
+     cb(products)
+    });
+  }
 
 };
