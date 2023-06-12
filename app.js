@@ -3,6 +3,7 @@ const express=require('express');
 const add_product=require('./routes/add-product');
 
 const shop=require('./routes/shop');
+const Delete=require('./routes/delete');
 
 const success=require('./routes/success');
 const cart=require('./routes/cart.js');
@@ -21,7 +22,7 @@ app.use(add_product);
 app.use(shop);
 app.use(contact_us);
 app.use(cart);
-
+app.use(Delete);
 app.use(success);
 app.get('/',(req,res,next)=>{
     res.sendFile(path.join(__dirname,'views','home.html'))
