@@ -5,6 +5,7 @@ const add_product=require('./routes/add-product');
 const shop=require('./routes/shop');
 
 const success=require('./routes/success');
+const cart=require('./routes/cart.js');
 const contact_us=require('./routes/contact-us');
 const app=express();
 const parser=require('body-parser')
@@ -19,7 +20,7 @@ app.use(parser.urlencoded({extended:false}))
 app.use(add_product);
 app.use(shop);
 app.use(contact_us);
-
+app.use(cart);
 
 app.use(success);
 app.get('/',(req,res,next)=>{
