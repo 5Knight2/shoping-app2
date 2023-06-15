@@ -11,8 +11,10 @@ const contact_us=require('./routes/contact-us');
 const app=express();
 const parser=require('body-parser')
 const path=require('path')
+const db=require('./util/database');
 
-
+db.execute('SELECT * FROM products').then((res)=>{console.log(res)})
+.catch((err)=>{console.log(err)})
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
