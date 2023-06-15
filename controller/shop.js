@@ -3,17 +3,16 @@ const Cart=require('../models/cart.js');
 const Product=require('../models/product.js');
 exports.get=(req,res,next)=>{
 
-     Product.fetchAll((products)=>{
-    console.log(products)
-    res.render('shop', {
-      prods: products,
-      pageTitle: 'Shop',
-      path: '../view/shop.ejs',
-      hasProducts: products.length > 0,
-      activeShop: true,
-      productCSS: true
-    });
-});
+     Product.fetchAll()
+     .then(([rows,fieldData])=>{
+      res.render('shop', {
+        prods: rows,
+        pageTitle: 'Shop',
+        path: '../view/shop.ejs',
+        
+      })}
+     )
+     .catch(err=>{console.log(err)})
 }
 
 

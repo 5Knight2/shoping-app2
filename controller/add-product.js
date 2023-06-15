@@ -18,29 +18,28 @@ exports.getproduct = (req, res, next) => {
 
     if(editing=='true'){
    
-      Product.getById(id,(product)=>{
-        console.log(product)
-      res.render('add-product', {
-        pageTitle: 'Add Product',
-        prod:product,
-        path: '../view/add-product.ejs',
-        edit:true
-      });
-    });
+      Product.getById(id)
+      .then(([rows,fieldData])=>{
+        res.render('add-product', {
+          pageTitle: 'Add Product',
+          prod:rows[0],
+          path: '../view/add-product.ejs',
+          edit:true
+        });
+      })
     }else{
-      Product.getById(id,(product)=>{
-     console.log(product)
-     let products=[];
-     products.push(product);
-     res.render('shop', {
-       prods: products,
-       pageTitle: 'Shop',
-       path: '../view/shop.ejs',
-       hasProducts: products.length > 0,
-       activeShop: true,
-       productCSS: true
-     });
- });
+      Product.getById(id)
+      .then(([rows,fieldData])=>{
+        res.render('shop', {
+          prods: rows,
+          pageTitle: 'Shop',
+          path: '../view/shop.ejs',
+          hasProducts: rows.length > 0,
+          activeShop: true,
+          productCSS: true
+        });
+      })
+      .catch(err=>{console.log(err)})
  }
   };
 
@@ -50,8 +49,9 @@ exports.post=(req,res,next)=>{
   const editing=req.query.edit;
   if(editing!='true'){
     const product1=new Product(req.body.title,req.body.imageUrl,req.body.description,req.body.price);
-    product1.save();
-    res.redirect('/add-product')
+    product1.save().then(()=>{res.redirect('/add-product')})
+    .catch((err)=>{console.log(err)})
+    
   }else{
     const id=req.body.id;
     const product1=new Product(req.body.title,req.body.imageUrl,req.body.description,req.body.price);
