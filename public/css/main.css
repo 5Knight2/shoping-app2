@@ -10,6 +10,8 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
+
+
 main {
   padding: 1rem;
   margin: auto;
@@ -17,6 +19,7 @@ main {
 
 form {
   display: inline;
+  
 }
 
 .main-header {
@@ -173,6 +176,8 @@ form {
 .card__actions button,
 .card__actions a {
   margin: 0 0.25rem;
+
+  
 }
 
 .btn {
@@ -193,6 +198,7 @@ form {
   color: white;
 }
 
+
 @media (min-width: 768px) {
   .main-header__nav {
     display: flex;
@@ -202,3 +208,4 @@ form {
     display: none;
   }
 }
+

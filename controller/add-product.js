@@ -1,5 +1,7 @@
 const path=require('path')
 const Product = require('../models/product');
+const  Sequelize  = require('sequelize');
+
 
 
 exports.get = (req, res, next) => {
@@ -17,24 +19,29 @@ exports.getproduct = (req, res, next) => {
     console.log(editing)
 
     if(editing=='true'){
-   
-      Product.getById(id)
-      .then(([rows,fieldData])=>{
+      Product.findByPk(id)
+      .then((rows)=>{
+      
+        
+      
         res.render('add-product', {
           pageTitle: 'Add Product',
-          prod:rows[0],
+          prod:rows.dataValues,
           path: '../view/add-product.ejs',
           edit:true
         });
       })
     }else{
-      Product.getById(id)
-      .then(([rows,fieldData])=>{
+      Product.findByPk(id)
+      .then((rows)=>{
+        const products=[];
+        products.push(rows.dataValues)
+        
         res.render('shop', {
-          prods: rows,
+          prods: products,
           pageTitle: 'Shop',
           path: '../view/shop.ejs',
-          hasProducts: rows.length > 0,
+          hasProducts: products.length > 0,
           activeShop: true,
           productCSS: true
         });
@@ -48,17 +55,34 @@ exports.getproduct = (req, res, next) => {
 exports.post=(req,res,next)=>{
   const editing=req.query.edit;
   if(editing!='true'){
-    const product1=new Product(req.body.title,req.body.imageUrl,req.body.description,req.body.price);
-    product1.save().then(()=>{res.redirect('/add-product')})
-    .catch((err)=>{console.log(err)})
-    
+    Product.create({
+      title:req.body.title,
+      price:req.body.price,
+      imageUrl:req.body.imageUrl,
+      description:req.body.description
+    })
+    .then(result=>{
+      console.log('hii');
+      console.log(result)
+      res.redirect('/success')}
+      )
+    .catch(err=>{console.log(err)})
   }else{
     const id=req.body.id;
-    const product1=new Product(req.body.title,req.body.imageUrl,req.body.description,req.body.price);
-    product1.id=id;
-    Product.replaceById(product1,(product)=>{     
-      res.redirect('/shop')
-  })
+    Product.findByPk(id)
+    .then(product=>{
+      product.title=req.body.title
+      product.price=req.body.price
+      product.imageUrl=req.body.imageUrl
+      product.description=req.body.description
+      return product.save();
+     }
+      ).then(result=> {console.log('hii')
+      console.log(result)
+      res.redirect('/success')})
+
+    .catch(err=>{console.log(err)})
+  
     
     }
   }
