@@ -12,19 +12,26 @@ const app=express();
 const parser=require('body-parser')
 const path=require('path')
 const sequelize=require('./util/database');
+var cors=require('cors')
 
+const user=require('./routes/user')
+
+app.use(cors());
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 app.use(express.static(path.join(__dirname,'public')));
-app.use(parser.urlencoded({extended:false}))
+app.use(parser.json({extended:false}))
+
 app.use(add_product);
 app.use(shop);
 app.use(contact_us);
 app.use(cart);
 app.use(Delete);
 app.use(success);
+
+app.use(user)
 app.get('/',(req,res,next)=>{
     res.sendFile(path.join(__dirname,'views','home.html'))
 })
