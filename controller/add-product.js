@@ -13,7 +13,7 @@ exports.get = (req, res, next) => {
   };
 
 exports.getproduct = (req, res, next) => {
-    const id=req.params.id;
+    const id=parseInt(req.params.id);
     
     const editing=req.query.edit;
     console.log(editing)
@@ -32,10 +32,12 @@ exports.getproduct = (req, res, next) => {
         });
       })
     }else{
-      Product.findByPk(id)
+    
+    // Product.findByPk(id)
+    req.user.getProducts({WHERE: {id:id} })
       .then((rows)=>{
         const products=[];
-        products.push(rows.dataValues)
+        products.push(rows[0].dataValues)
         
         res.render('shop', {
           prods: products,
@@ -55,7 +57,8 @@ exports.getproduct = (req, res, next) => {
 exports.post=(req,res,next)=>{
   const editing=req.query.edit;
   if(editing!='true'){
-    Product.create({
+   // Product.create
+   req.user.createProduct({
       title:req.body.title,
       price:req.body.price,
       imageUrl:req.body.imageUrl,
@@ -69,8 +72,10 @@ exports.post=(req,res,next)=>{
     .catch(err=>{console.log(err)})
   }else{
     const id=req.body.id;
-    Product.findByPk(id)
+    // Product.findByPk(id)
+    req.user.getProducts({WHERE: {id:id} })
     .then(product=>{
+      product=product[0]
       product.title=req.body.title
       product.price=req.body.price
       product.imageUrl=req.body.imageUrl

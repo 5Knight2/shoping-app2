@@ -3,7 +3,8 @@ const Cart=require('../models/cart.js');
 const Product=require('../models/product.js');
 exports.get=(req,res,next)=>{
 
-     Product.findAll()
+  req.user.getProducts()
+    //  Product.findAll()
      .then((rows)=>{
       res.render('shop', {
         prods: rows,
