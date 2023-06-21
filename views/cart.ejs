@@ -17,32 +17,38 @@
             
             <li class="main-header__item"><a href="/shop">shop</a></li>
             <li class="main-header__item"><a href="/contact-us">contact us</a></li>
+            <li class="main-header__item"><a href="/cart">cart</a></li>
         </ul>
     </header>
 
     <main>
         <h1>My Cart</h1>
         
-        <p>Total Price <%=prods.totalprice%></p>
+        <p>Total Price <%=/*prods.totalprice*/%></p>
         <p>List of all the products...</p>
-        <% if (prods.products.length > 0) { %>
+        <% if (prods.length > 0) { %>
             <div class="grid">
-                <% for (let product of prods.products) { %>
+                <% for (let i=0;i<prods.length;i++) { %>
                     <article class="card product-item">
                         <header class="card__header">
-                            <h1 class="product__title">Id: <%=product.id %></h1>
+                            <h1 class="product__title">Id: <%=prods[i].dataValues.id %></h1>
                         </header>
                        
                         <div class="card__content">
-                            <h2 class="product__price">Qty: <%=product.qty %></h2>
-                            <a href="/shop/<%product.id%>">
+                            <h2 class="product__price">Qty: <%=prods[i].cartItem.dataValues.quantity %></h2>
+                            <a href="/shop/<%=prods[i].dataValues.id%>">
                            
                         </div>
                       
                         <div class="card__actions">
-                            <a href="/add-product/<%=product.id%>">
+                            <a href="/add-product/<%=prods[i].dataValues.id%>">
 
                             <button  class="btn" name="details" id="details">Details</button></a>
+                        </div>
+                        <div class="card__actions">
+                            <a href="/cart/<%=prods[i].cartItem.dataValues.productId%>">
+
+                            <button  class="btn" name="delete" id="delete">Remove from cart</button></a>
                         </div>
                 </article>
                 <% } %>

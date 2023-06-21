@@ -15,6 +15,9 @@ const sequelize=require('./util/database');
 
 const Product=require('./models/product');
 const User=require('./models/user');
+const Cart=require('./models/cart');
+const CartItem=require('./models/cartItem');
+
 var cors=require('cors')
 
 const user=require('./routes/user')
@@ -55,20 +58,28 @@ app.use((req,res,next)=>{
 Product.belongsTo(User,{constraints:true, onDelete:'CASCADE'});
 User.hasMany(Product);
 
+Cart.belongsTo(User);
+User.hasOne(Cart);
 
-sequelize.sync()
+Cart.belongsToMany(Product,{through:CartItem});
+Product.belongsToMany(Cart,{through:CartItem})
+
+sequelize
+//  .sync({force:true})
+.sync()
 .then((res)=>{
     console.log(res)
     return User.findByPk(1)
     
 }).then((user)=>{
-if(!user){return User.create({name:'PT',email:'pt@2580.com',mobile:'1234567890'})}
+if(!user){return User.create({name:'PT',email:'pt@2580.com',mobile:'1234567890'}).then(user=>{
+    return user.createCart();
+    
+})}
 return user;
 
-}).then(user=>{
-    app.listen(8000);
 })
-
+.then((cart)=>{app.listen(8000);})
 .catch((err)=>{
     console.log(err)
 })
