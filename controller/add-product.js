@@ -58,14 +58,10 @@ exports.post=(req,res,next)=>{
   const editing=req.query.edit;
   if(editing!='true'){
    // Product.create
-   req.user.createProduct({
-      title:req.body.title,
-      price:req.body.price,
-      imageUrl:req.body.imageUrl,
-      description:req.body.description
-    })
+   const product=new Product( req.body.title,req.body.price,req.body.description,req.body.imageUrl);
+   product.save()
     .then(result=>{
-      console.log('hii');
+      console.log('product created');
       console.log(result)
       res.redirect('/success')}
       )
