@@ -48,9 +48,9 @@ exports.getproduct = (req, res, next) => {
           productCSS: true
         });
       })
-      .catch(err=>{console.log(err)})
- }
-  };
+//       .catch(err=>{console.log(err)})
+  }
+   };
 
 
 
