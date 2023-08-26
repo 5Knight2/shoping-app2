@@ -2,11 +2,11 @@ const http=require('http');
 const express=require('express');
 
  const add_product=require('./routes/add-product');
-// const shop=require('./routes/shop');
-// const Delete=require('./routes/delete');
-// const success=require('./routes/success');
+ const shop=require('./routes/shop');
+ const Delete=require('./routes/delete');
+ const success=require('./routes/success');
 // const cart=require('./routes/cart.js');
-// const contact_us=require('./routes/contact-us');
+ const contact_us=require('./routes/contact-us');
 // const user=require('./routes/user')
 
 const app=express();
@@ -38,11 +38,11 @@ app.use((req,res,next)=>{
 
 
  app.use(add_product);
-// app.use(shop);
-// app.use(contact_us);
+ app.use(shop);
+ app.use(contact_us);
 // app.use(cart);
-// app.use(Delete);
-// app.use(success);
+ app.use(Delete);
+ app.use(success);
 
 // app.use(user)
 app.get('/',(req,res,next)=>{

@@ -24,7 +24,7 @@
 <body>
     
     <main>
-        <form class="product-form" action="/add-product<%if(edit==true){%>/<%=prod.id%>/?edit=true<%}%>" method="POST">
+        <form class="product-form" action="/add-product<%if(edit==true){%>/<%=prod._id%>/?edit=true<%}%>" method="POST">
             <div class="form-control">
                 <label for="title">Title</label><br>
                 <input type="text" name="title" id="title" value="<%if(edit==true){%><%=prod.title%><%}%>"><br>
@@ -43,7 +43,7 @@
             </div>
             <div class="form-control">
                
-                <input type="hidden" name="id" id="id"  value="<%if(edit==true){%><%=prod.id%><%}%>"><br>
+                <input type="hidden" name="id" id="id"  value="<%if(edit==true){%><%=prod._id%><%}%>"><br>
             </div>
             <button class="btn" type="submit"><%if(edit==true){%>Submit changes<%}else {%>Add Product<%}%></button>
         </form>

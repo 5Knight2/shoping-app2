@@ -1,6 +1,6 @@
 const path=require('path')
 const Product = require('../models/product');
-const  Sequelize  = require('sequelize');
+const  mongodb  = require('mongodb');
 
 
 
@@ -13,31 +13,31 @@ exports.get = (req, res, next) => {
   };
 
 exports.getproduct = (req, res, next) => {
-    const id=parseInt(req.params.id);
+    const id=req.params.id;
     
     const editing=req.query.edit;
     console.log(editing)
 
     if(editing=='true'){
-      Product.findByPk(id)
+      Product.findById(id)
       .then((rows)=>{
       
         
       
         res.render('add-product', {
           pageTitle: 'Add Product',
-          prod:rows.dataValues,
+          prod:rows,
           path: '../view/add-product.ejs',
           edit:true
         });
       })
     }else{
     
-    // Product.findByPk(id)
-    req.user.getProducts({WHERE: {id:id} })
+    Product.findById(id)
+    //req.user.getProducts({WHERE: {id:id} })
       .then((rows)=>{
         const products=[];
-        products.push(rows[0].dataValues)
+        products.push(rows)
         
         res.render('shop', {
           prods: products,
@@ -67,22 +67,13 @@ exports.post=(req,res,next)=>{
       )
     .catch(err=>{console.log(err)})
   }else{
-    const id=req.body.id;
-    // Product.findByPk(id)
-    req.user.getProducts({WHERE: {id:id} })
-    .then(product=>{
-      product=product[0]
-      product.title=req.body.title
-      product.price=req.body.price
-      product.imageUrl=req.body.imageUrl
-      product.description=req.body.description
-      return product.save();
-     }
-      ).then(result=> {console.log('hii')
+      const product=new Product(req.body.title,req.body.price,req.body.description,req.body.imageUrl,new mongodb.ObjectId(req.body.id))
+      return product.save()
+     .then(result=> {
       console.log(result)
       res.redirect('/success')})
 
-    .catch(err=>{console.log(err)})
+     .catch(err=>{console.log(err)})
   
     
     }
