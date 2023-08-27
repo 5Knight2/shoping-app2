@@ -1,24 +1,32 @@
-// const Sequelize=require('sequelize');
-// const sequelize=require('../util/database');
+const mongodb=require('mongodb');
+const getDb=require('../util/database').getDb;
 
-// const User=sequelize.define('user',{
-//   id: {
-//     type:Sequelize.INTEGER,
-//     autoIncrement:true,
-//     allowNull:false,
-//     primaryKey:true
-//   },
-//   email:{
-//     type:Sequelize.STRING,
-//     allowNull:false
-//   },
-//   mobile:{
-//     type:Sequelize.INTEGER,
-//     allowNull:false
-//   },
-//   name:{
-//     type:Sequelize.STRING,
-//     allowNull:false
-//   }
-// });
-// module.exports=User;
+class User{
+    constructor(email,mobile,name,id){
+this.email=email;
+this.mobile=mobile;
+this.name=name;
+this.id=id;
+    }
+
+    save(){
+        const db=getDb();
+        return db.collection('users').insertOne(this)
+        .then((result)=>{console.log(result);
+        return result;})
+        .catch(err=>{console.log(err)})
+    }
+
+    static findUserById(id){
+       
+        const db=getDb();
+        return db.collection('users').findOne({ _id: new mongodb.ObjectId(id)})
+        .then((result)=>{console.log(result);
+        return result;})
+        .catch(err=>{console.log(err)})
+    }
+  
+
+}
+
+ module.exports=User;

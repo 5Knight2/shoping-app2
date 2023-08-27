@@ -58,7 +58,7 @@ exports.post=(req,res,next)=>{
   const editing=req.query.edit;
   if(editing!='true'){
    // Product.create
-   const product=new Product( req.body.title,req.body.price,req.body.description,req.body.imageUrl);
+   const product=new Product( req.body.title,req.body.price,req.body.description,req.body.imageUrl,null,req.user._id);
    product.save()
     .then(result=>{
       console.log('product created');
@@ -67,7 +67,7 @@ exports.post=(req,res,next)=>{
       )
     .catch(err=>{console.log(err)})
   }else{
-      const product=new Product(req.body.title,req.body.price,req.body.description,req.body.imageUrl,new mongodb.ObjectId(req.body.id))
+      const product=new Product(req.body.title,req.body.price,req.body.description,req.body.imageUrl,new mongodb.ObjectId(req.body.id),req.user._id)
       return product.save()
      .then(result=> {
       console.log(result)

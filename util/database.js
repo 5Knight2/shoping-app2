@@ -3,9 +3,9 @@ const MongoClient=mongodb.MongoClient;
 let _db;
 
 const mongoConnect=(Cb)=>{
-MongoClient.connect('mongodb+srv://root:Password123@cluster0.dn8re5y.mongodb.net/shop?retryWrites=true&w=majority')
+MongoClient.connect('mongodb+srv://root:Password123@cluster0.dn8re5y.mongodb.net/?retryWrites=true&w=majority')
 .then((client)=>{console.log('connected')
-_db=client.db();
+_db=client.db('shop');
 Cb();
 })
 .catch(err=>{console.log(err);})

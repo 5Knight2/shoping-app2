@@ -7,13 +7,14 @@ const express=require('express');
  const success=require('./routes/success');
 // const cart=require('./routes/cart.js');
  const contact_us=require('./routes/contact-us');
-// const user=require('./routes/user')
+ const user=require('./routes/user')
 
 const app=express();
 const parser=require('body-parser')
 const path=require('path')
 
 const mongoConnect=require('./util/database').mongoConnect;
+const User = require('./models/user');
 
 var cors=require('cors')
 
@@ -28,11 +29,13 @@ app.use(parser.urlencoded({extended:false}))
 
 
 app.use((req,res,next)=>{
-    // User.findByPk(1).then((user)=>{
-    // req.user=user;
-    // next();})
-    // .catch(err=>{console.log(err)})
-    next();
+   
+    User.findUserById('64eae9b0c707106a322fb9fe')
+    .then((user)=>{
+    req.user=user;
+    next();})
+    .catch(err=>{console.log(err)})
+ 
 })
 
 
@@ -44,7 +47,7 @@ app.use((req,res,next)=>{
  app.use(Delete);
  app.use(success);
 
-// app.use(user)
+ app.use(user)
 app.get('/',(req,res,next)=>{
     res.sendFile(path.join(__dirname,'views','home.html'))
 })
