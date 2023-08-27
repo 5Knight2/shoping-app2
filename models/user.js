@@ -18,17 +18,35 @@ this._id=id;
         .catch(err=>{console.log(err)})
     }
 
+    delete(product){   const db=getDb();
+        let updatedCart;
+        if(!this.cart) cartProducts=-1
+        else
+ updatedCart=this.cart.items.map( item=>{ 
+if(item._id.toString()==product._id.toString())
+item.quantity--
+return  item })
+updatedCart=updatedCart.filter(item=>{if(item.quantity<=0)return false
+    
+return true;})
+updatedCart={items:updatedCart}
+db.collection('users').updateOne({_id:new mongodb.ObjectId(this._id)},
+    {$set:{cart:updatedCart}})
+    }
+
     addToCart(product){
         const db=getDb();
         let cartProducts,updatedCart;
-        if(!this.cart) cartProducts=-1
+        if(!this.cart) {cartProducts=-1,
+            updatedCart={items:[]}
+        }
         else
  cartProducts=this.cart.items.findIndex( cp=>{return cp._id.toString()==product._id.toString()})
 if(cartProducts==-1){
     if(!this.cart)updatedCart={items:[{...product,quantity:1}]};
-    updatedCart=this.cart;
+    else{updatedCart=this.cart;
      updatedCart.items.push({...product,quantity:1})
-    
+    }
 }else{
      updatedCart=this.cart;
     updatedCart.items[cartProducts].quantity++;

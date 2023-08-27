@@ -22,6 +22,7 @@ exports.post=(req,res,next)=>{
  const product=Product.findById(prodId)
  .then((product)=>{
   return req.user.addToCart(product)})
-  .then(result=>{console.log(result)})
+  .then(result=>{console.log(result)
+  return result;})
  .catch(err=>{console.log(err)})
 }

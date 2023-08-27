@@ -1,5 +1,5 @@
 const path=require('path')
-//const Cart = require('../models/cart');
+const Product = require('../models/product');
 const { error } = require('console');
 
 
@@ -40,17 +40,10 @@ exports.get = (req, res, next) => {
   };
 
   exports.delete = (req, res, next) => {
-    const id=req.params.id;  
-    req.user.getCart()
-    .then((cart)=>{
-      cart.getProducts({where: {id:id}})
-      .then((products)=>{
-        if(products[0])return products[0].cartItem.destroy();
-        else return error
-      }).then(()=>{console.log('Deleted');
-    res.redirect('/cart')})
-      .catch((err)=>{console.log(err)}) 
-
-    })
-  
-  }
+    const prodId=req.params.id;  
+    const product=Product.findById(prodId)
+    .then((product)=>{
+     return req.user.delete(product)})
+     .then(result=>{console.log(result)})
+    .catch(err=>{console.log(err)})
+    }
