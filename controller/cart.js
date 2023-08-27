@@ -1,14 +1,16 @@
 const path=require('path')
-const Cart = require('../models/cart');
+//const Cart = require('../models/cart');
 const { error } = require('console');
 
 
 
 exports.get = (req, res, next) => {
-    
-  req.user.getCart()
-  .then(cart=>{
-    return cart.getProducts().then((products)=>{console.log(products);
+  let products;
+  if(!req.user.cart){products={items:[]}}
+  else{
+ products={...req.user.cart};
+  }
+  
       res.render('cart', {
           
                prods: products,
@@ -19,9 +21,7 @@ exports.get = (req, res, next) => {
                productCSS: true
              });
 
-    })
-  })
-  .catch(err=>{console.log(err)})
+  
   
 //       Cart.fetch((cart)=>{
       

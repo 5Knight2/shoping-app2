@@ -26,27 +26,27 @@
         
         <p>Total Price <%=/*prods.totalprice*/%></p>
         <p>List of all the products...</p>
-        <% if (prods.length > 0) { %>
+        <% if (prods.items.length > 0) { %>
             <div class="grid">
-                <% for (let i=0;i<prods.length;i++) { %>
+                <% for (let i=0;i<prods.items.length;i++) { %>
                     <article class="card product-item">
                         <header class="card__header">
-                            <h1 class="product__title">Id: <%=prods[i].dataValues.id %></h1>
+                            <h1 class="product__title">Id: <%=prods.items[i]._id %></h1>
                         </header>
                        
                         <div class="card__content">
-                            <h2 class="product__price">Qty: <%=prods[i].cartItem.dataValues.quantity %></h2>
-                            <a href="/shop/<%=prods[i].dataValues.id%>">
+                            <h2 class="product__price">Qty: <%=prods.items[i].quantity %></h2>
+                            <a href="/shop/<%=prods.items[i]._id%>">
                            
                         </div>
                       
                         <div class="card__actions">
-                            <a href="/add-product/<%=prods[i].dataValues.id%>">
+                            <a href="/add-product/<%=prods.items[i]._id%>">
 
                             <button  class="btn" name="details" id="details">Details</button></a>
                         </div>
                         <div class="card__actions">
-                            <a href="/cart/<%=prods[i].cartItem.dataValues.productId%>">
+                            <a href="/cart/<%=prods.items[i].product_Id%>">
 
                             <button  class="btn" name="delete" id="delete">Remove from cart</button></a>
                         </div>

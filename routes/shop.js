@@ -7,6 +7,6 @@ router.get('/shop',shopcontroller.get);
 
 
 
-// router.post('/shop',shopcontroller.post)
+ router.post('/shop',shopcontroller.post)
 
     module.exports=router;
