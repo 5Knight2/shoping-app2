@@ -1,6 +1,7 @@
 const path=require('path')
 const Product = require('../models/product');
 const { error } = require('console');
+const { getDb } = require('../util/database');
 
 
 
@@ -47,3 +48,29 @@ exports.get = (req, res, next) => {
      .then(result=>{console.log(result)})
     .catch(err=>{console.log(err)})
     }
+
+    exports.order = (req, res, next) => {
+    
+      
+        req.user.addOrder()
+       .then(result=>{console.log(result)
+      res.redirect('/getOrders')})
+      .catch(err=>{console.log(err)})
+      }
+
+      exports.orderPage = (req, res, next) => {
+        const db=getDb()
+        req.user.getOrders()
+        .then(Orders=>{
+            res.render('orders', {
+                
+                     Orders: Orders,
+                     pageTitle: 'Orders',
+                     path: '../view/orders.ejs',
+                     hasProducts: Orders.length > 0,
+                     activeShop: true,
+                     productCSS: true
+                   });
+                  })
+                  .catch(err=>{console.log(err)})
+                  }

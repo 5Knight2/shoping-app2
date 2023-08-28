@@ -18,6 +18,25 @@ this._id=id;
         .catch(err=>{console.log(err)})
     }
 
+    getOrders(){const db=getDb()
+        return db.collection('orders').find({userId:new mongodb.ObjectId(this._id)}).toArray()
+        .then(result=>{
+            console.log(result)
+        return result;})
+        .catch(err=>{console.log(err)})
+    }
+
+    addOrder(){
+        const db=getDb()
+        return db.collection('orders').insertOne({cart:this.cart,userId:this._id})
+        .then(result=>{
+            this.cart={items:[]};
+        return db.collection('users').updateOne({_id:new mongodb.ObjectId(this._id)},
+        {$set:{cart:{items:[]}}})
+        })
+        .catch(err=>{console.log(err)})
+    }
+
     delete(product){   const db=getDb();
         let updatedCart;
         if(!this.cart) cartProducts=-1
@@ -59,8 +78,9 @@ db.collection('users').updateOne({_id:new mongodb.ObjectId(this._id)},
        
         const db=getDb();
         return db.collection('users').findOne({ _id: new mongodb.ObjectId(id)})
-        .then((result)=>{console.log(result);
-        return result;})
+        .then(result=>{
+        console.log(result)
+        return result})
         .catch(err=>{console.log(err)})
     }
   

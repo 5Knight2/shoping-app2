@@ -22,41 +22,34 @@
     </header>
 
     <main>
-        <h1>My Cart</h1>
-        <a href="/cart/order">
-        <button  class="btn" name="order" id="order">Order</button></a>
+        <h1>My Orders</h1>
+      
+
+        <p>List of all the Orders...</p>
         
-        <p>Total Price <%=/*prods.totalprice*/%></p>
-        <p>List of all the products...</p>
-        <% if (prods.items.length > 0) { %>
+        <% if (Orders.length > 0) { %>
+            <%let i=0; for(prods of Orders){i++ %>
+
+                <h1>Order : <%=i %></h1>
             <div class="grid">
-                <% for (let i=0;i<prods.items.length;i++) { %>
+                <% for (let i=0;i<prods.cart.items.length;i++) { %>
                     <article class="card product-item">
                         <header class="card__header">
-                            <h1 class="product__title">Name: <%=prods.items[i].title %></h1>
+                            <h1 class="product__title">Name: <%=prods.cart.items[i].title %></h1>
                         </header>
                        
                         <div class="card__content">
-                            <h2 class="product__price">Qty: <%=prods.items[i].quantity %></h2>
-                            <a href="/shop/<%=prods.items[i]._id%>">
-                           
+                            <h2 class="product__price">Qty: <%=prods.cart.items[i].quantity %><br>
+                                Price: <%=prods.cart.items[i].price %></h2>                           
                         </div>
                       
-                        <div class="card__actions">
-                            <a href="/add-product/<%=prods.items[i]._id%>">
-
-                            <button  class="btn" name="details" id="details">Details</button></a>
-                        </div>
-                        <div class="card__actions">
-                            <a href="/cart/<%=prods.items[i]._id%>">
-
-                            <button  class="btn" name="delete" id="delete">Remove from cart</button></a>
-                        </div>
+                        
+                        
                 </article>
                 <% } %>
             </div>
-        <% } else { %>
-            <h1>No Products Found!</h1>
+        <%} } else { %>
+            <h1>No Orders Found!</h1>
         <% } %>
     </main>
 </body>
