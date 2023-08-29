@@ -7,7 +7,7 @@ const express=require('express');
   const success=require('./routes/success');
 //  const cart=require('./routes/cart.js');
   const contact_us=require('./routes/contact-us');
-//  const user=require('./routes/user')
+  const user=require('./routes/user')
 
 const app=express();
 const parser=require('body-parser')
@@ -30,13 +30,14 @@ app.use(parser.urlencoded({extended:false}))
 
 
 app.use((req,res,next)=>{
-   
-    // User.findUserById('64eae9b0c707106a322fb9fe')
-    // .then((user)=>{
-    // req.user=new User(user.email,user.mobile,user.name,user.cart,user._id);
-    // next();})
-    // .catch(err=>{console.log(err)})
-    next();
+//    const u=new User({name:'pt',mobile:1234567890,email:'pt@pt.com',cart:{items:[]}})
+//    u.save()
+    User.findById('64edb090a960abfb927c8dcf')
+  .then((user)=>{
+        req.user=user
+    next();})
+    .catch(err=>{console.log(err)})
+
  
 })
 
