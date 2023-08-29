@@ -3,7 +3,7 @@ const Product=require('../models/product.js');
 exports.get=(req,res,next)=>{
 
 
-      Product.fetchAll()
+      Product.find()
      .then((rows)=>{
       res.render('shop', {
         prods: rows,
