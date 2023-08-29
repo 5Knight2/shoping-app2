@@ -38,17 +38,17 @@
                        
                         <div class="card__content">
                             <h2 class="product__price">Qty: <%=prods.items[i].quantity %></h2>
-                            <a href="/shop/<%=prods.items[i]._id%>">
+                            <a href="/shop/<%=prods.items[i].productId._id%>">
                            
                         </div>
                       
                         <div class="card__actions">
-                            <a href="/add-product/<%=prods.items[i]._id%>">
+                            <a href="/add-product/<%=prods.items[i].productId._id%>">
 
                             <button  class="btn" name="details" id="details">Details</button></a>
                         </div>
                         <div class="card__actions">
-                            <a href="/cart/<%=prods.items[i]._id%>">
+                            <a href="/cart/<%=prods.items[i].productId._id%>">
 
                             <button  class="btn" name="delete" id="delete">Remove from cart</button></a>
                         </div>

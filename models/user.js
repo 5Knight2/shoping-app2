@@ -17,7 +17,7 @@ if(!this.cart) {cartProducts=-1,
   updatedCart={items:[]}
  }
  else
- cartProducts=this.cart.items.findIndex( cp=>{return cp._id.toString()==product._id.toString()})
+ cartProducts=this.cart.items.findIndex( cp=>{return cp.productId.toString()==product._id.toString()})
 if(cartProducts==-1){
     if(!this.cart)updatedCart={items:[{productId:product._id,quantity:1}]};
     else{updatedCart=this.cart;
@@ -28,9 +28,25 @@ if(cartProducts==-1){
     updatedCart.items[cartProducts].quantity++;
 }
 return this.save();
-    
-
 };
+
+userSchema.methods.delete=function(product){
+  
+        let updatedCart;
+        if(!this.cart) cartProducts=-1
+        else
+ updatedCart=this.cart.items.map( item=>{ 
+if(item.productId.toString()==product._id.toString())
+item.quantity--
+return  item })
+updatedCart=updatedCart.filter(item=>{if(item.quantity<=0)return false
+    
+return true;})
+updatedCart={items:updatedCart}
+this.cart=updatedCart;
+this.save();
+    }
+
 
 module.exports=mongoose.model('User',userSchema)
 // const mongodb=require('mongodb');
