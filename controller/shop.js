@@ -1,10 +1,18 @@
 const path=require('path')
+const User=require('../models/user');
 const Product=require('../models/product.js');
+
+const mongoose = require('mongoose');
+
+ 
 exports.get=(req,res,next)=>{
 
 
       Product.find()
+      // .select('title _id price').populate('userId')
      .then((rows)=>{
+      console.log(mongoose.version);
+      console.log(rows[0])
       res.render('shop', {
         prods: rows,
         pageTitle: 'Shop',

@@ -6,12 +6,9 @@ const { getDb } = require('../util/database');
 
 
 exports.get = (req, res, next) => {
-  let products;
-  if(!req.user.cart){products={items:[]}}
-  else{
- products={...req.user.cart};
-  }
-  
+  req.user.populate('cart.items.productId')
+  .then(products=>{
+  products=products.cart;
       res.render('cart', {
           
                prods: products,
@@ -20,7 +17,9 @@ exports.get = (req, res, next) => {
                hasProducts: products.length > 0,
                activeShop: true,
                productCSS: true
-             });
+             })
+    })
+    .catch(err=>{console.log(err)})
 
   
   

@@ -5,7 +5,7 @@ const express=require('express');
   const shop=require('./routes/shop');
   const Delete=require('./routes/delete');
   const success=require('./routes/success');
-//  const cart=require('./routes/cart.js');
+  const cart=require('./routes/cart.js');
   const contact_us=require('./routes/contact-us');
   const user=require('./routes/user')
 
@@ -46,7 +46,7 @@ app.use((req,res,next)=>{
   app.use(add_product);
   app.use(shop);
   app.use(contact_us);
-//  app.use(cart);
+  app.use(cart);
   app.use(Delete);
   app.use(success);
 
