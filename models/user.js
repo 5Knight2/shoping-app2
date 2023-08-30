@@ -1,6 +1,7 @@
 const mongoose=require('mongoose');
 
 const Schema=mongoose.Schema;
+const Order=require('../models/order')
 
 const userSchema=new Schema({
   email:{type:String,required:true},
@@ -46,6 +47,28 @@ updatedCart={items:updatedCart}
 this.cart=updatedCart;
 this.save();
     }
+
+   userSchema.methods.addOrder=function(){
+       
+         const order=new Order({cart:this.cart,userId:this._id});
+         return order.save()
+         .then(result=>{       
+            this.cart={items:[]};
+       return this.save().then(result=>{return result;})
+        })
+      .catch((err)=>{console.log(err)})
+    }
+
+    userSchema.methods.getOrders=function(){
+       
+      return Order.find({userId:this._id})
+      .then(result=>{       
+         return result;
+     })
+   .catch((err)=>{console.log(err)})
+ }
+       
+    
 
 
 module.exports=mongoose.model('User',userSchema)

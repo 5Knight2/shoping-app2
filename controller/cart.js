@@ -53,12 +53,12 @@ exports.get = (req, res, next) => {
       
         req.user.addOrder()
        .then(result=>{console.log(result)
-      res.redirect('/getOrders')})
+      res.redirect('/cart/getOrders')})
       .catch(err=>{console.log(err)})
       }
 
       exports.orderPage = (req, res, next) => {
-        const db=getDb()
+        
         req.user.getOrders()
         .then(Orders=>{
             res.render('orders', {

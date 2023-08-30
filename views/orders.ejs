@@ -28,7 +28,7 @@
         <p>List of all the Orders...</p>
         
         <% if (Orders.length > 0) { %>
-            <%let i=0; for(prods of Orders){i++ %>
+            <%let i=0; for(let j=0;j<Orders.length;j++){i++;let prods=Orders[j]; %>
 
                 <h1>Order : <%=i %></h1>
             <div class="grid">
