@@ -11,8 +11,7 @@ exports.get=(req,res,next)=>{
       Product.find()
       // .select('title _id price').populate('userId')
      .then((rows)=>{
-      console.log(mongoose.version);
-      console.log(rows[0])
+      
       res.render('shop', {
         prods: rows,
         pageTitle: 'Shop',

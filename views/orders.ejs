@@ -32,15 +32,15 @@
 
                 <h1>Order : <%=i %></h1>
             <div class="grid">
-                <% for (let i=0;i<prods.cart.items.length;i++) { %>
+                <% for (let i=0;i<prods.products.length;i++) { %>
                     <article class="card product-item">
                         <header class="card__header">
-                            <h1 class="product__title">Name: <%=prods.cart.items[i].title %></h1>
+                            <h1 class="product__title">Name: <%=prods.products[i].product.title %></h1>
                         </header>
                        
                         <div class="card__content">
-                            <h2 class="product__price">Qty: <%=prods.cart.items[i].quantity %><br>
-                                Price: <%=prods.cart.items[i].price %></h2>                           
+                            <h2 class="product__price">Qty: <%=prods.products[i].product.quantity %><br>
+                                Price: <%=prods.products[i].product.price %></h2>                           
                         </div>
                       
                         

@@ -53,7 +53,7 @@ exports.get = (req, res, next) => {
       
         req.user.addOrder()
        .then(result=>{console.log(result)
-      res.redirect('/cart/getOrders')})
+      res.redirect('/cart/getOrder')})
       .catch(err=>{console.log(err)})
       }
 
@@ -61,7 +61,7 @@ exports.get = (req, res, next) => {
         
         req.user.getOrders()
         .then(Orders=>{
-            res.render('orders', {
+           res.render('orders', {
                 
                      Orders: Orders,
                      pageTitle: 'Orders',

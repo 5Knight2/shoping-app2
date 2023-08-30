@@ -1,7 +1,8 @@
 const mongoose=require('mongoose');
 
 const Schema=mongoose.Schema;
-const Order=require('../models/order')
+const Order=require('../models/order');
+const order = require('../models/order');
 
 const userSchema=new Schema({
   email:{type:String,required:true},
@@ -49,19 +50,28 @@ this.save();
     }
 
    userSchema.methods.addOrder=function(){
-       
-         const order=new Order({cart:this.cart,userId:this._id});
-         return order.save()
-         .then(result=>{       
-            this.cart={items:[]};
-       return this.save().then(result=>{return result;})
-        })
+    const u={name:this.name,userId:this}
+     
+     return this.populate('cart.items.productId')
+      .then(user=>{
+        
+        const products=user.cart.items.map(i=>{return {quantity:i.quantity,product:{...i.productId}}})
+        const order=new Order({
+          user:u,
+          products:products
+        }
+      )
+      this.cart={items:[]};
+      this.save;
+      return order.save();
+        
+      })
       .catch((err)=>{console.log(err)})
     }
 
     userSchema.methods.getOrders=function(){
        
-      return Order.find({userId:this._id})
+      return Order.find({"user.userId":this._id})
       .then(result=>{       
          return result;
      })
